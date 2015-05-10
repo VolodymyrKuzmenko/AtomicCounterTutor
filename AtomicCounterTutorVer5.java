@@ -32,7 +32,7 @@ public class AtomicCounterTutorVer5 {
 				local_counter++;
 				Thread.yield();
 			}
-			counter +=local_counter;
+			counter =local_counter + counter;
 			
 		}
 		public int getLocalCounter(){
