@@ -16,23 +16,27 @@ import org.junit.Test;
  */
 public class AtomicCounterTutorVer5 {
 	
-	volatile long counter = 0;
+	    volatile int counter = 0;
 
 	class TestThread implements Runnable {
 		String threadName;
-		
+		private int local_counter;
 		public TestThread(String threadName) {
 			this.threadName = threadName;
 		}
 		
 		@Override
 		public void run() {
-			long local_count = counter;
+			local_counter = counter;
 			for (int i=0;i<10000;i++) {
-				local_count++;
+				local_counter++;
 				Thread.yield();
 			}
-			counter =counter+local_count;
+			counter +=local_counter;
+			
+		}
+		public int getLocalCounter(){
+			return this.local_counter;
 		}
 	}
 	
@@ -49,6 +53,8 @@ public class AtomicCounterTutorVer5 {
 	    try {
 			for (int i=0;i<100;i++) {
 				threads.get(i).join();
+				
+				
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
